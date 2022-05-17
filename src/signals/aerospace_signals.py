@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from signals.base_signal import Signal
-from signals.simple_signals import Step
+from src.signals.base_signal import Signal
+from src.signals.simple_signals import Step
 
 
 @dataclass

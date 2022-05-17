@@ -128,5 +128,5 @@ class Const(Signal):
     value: float = 0.0
     t_start: float = NINF
 
-    def _signal(self, t: float) -> float:
+    def _signal(self, _: float) -> float:
         return self.value
