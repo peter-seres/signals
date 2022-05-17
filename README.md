@@ -18,5 +18,6 @@ r_t = reference(t=5.0)
 
 ## To-do list:
 
+- add setup.py / setup.cfg so that it can be installed easily as a package
 - add implementation for +=, -=, *= and /= operators
 - add more commonly used signals
