@@ -2,10 +2,11 @@ from __future__ import annotations
 from numpy import NINF, PINF
 from abc import abstractmethod, ABC
 from dataclasses import dataclass, field
+from typing import Union
 
 
 class BaseSignal:
-    def __add__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __add__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         if isinstance(other, BaseSignal):
             return SumOfSignals(self, other)
         elif isinstance(other, (float, int)):
@@ -16,10 +17,10 @@ class BaseSignal:
                 f"Operand + was called for types: {type(self)} + {type(other)}"
             )
 
-    def __radd__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __radd__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         return self + other
 
-    def __mul__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __mul__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         if isinstance(other, BaseSignal):
             return ProductOfSignals(self, other)
         elif isinstance(other, (float, int)):
@@ -30,10 +31,10 @@ class BaseSignal:
                 f"Operand * was called for types: {type(self)} * {type(other)}"
             )
 
-    def __rmul__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __rmul__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         return self * other
 
-    def __sub__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __sub__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         if isinstance(other, BaseSignal):
             return DifferenceOfSignals(self, other)
         elif isinstance(other, (float, int)):
@@ -44,7 +45,7 @@ class BaseSignal:
                 f"Operand - was called for types: {type(self)} - {type(other)}"
             )
 
-    def __rsub__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __rsub__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         if isinstance(other, BaseSignal):
             return DifferenceOfSignals(other, self)
         elif isinstance(other, (float, int)):
@@ -55,7 +56,7 @@ class BaseSignal:
                 f"Operand - was called for types: {type(other)} - {type(self)}"
             )
 
-    def __truediv__(self, other: BaseSignal | float | int) -> BaseSignal:
+    def __truediv__(self, other: Union[BaseSignal | float | int]) -> BaseSignal:
         if isinstance(other, BaseSignal):
             return DivisionOfSignals(self, other)
         elif isinstance(other, (float, int)):
@@ -66,7 +67,7 @@ class BaseSignal:
                 f"Operand / was called for types: {type(self)} / {type(other)}"
             )
 
-    def __rtruediv__(self, other: BaseSignal | float | int):
+    def __rtruediv__(self, other: Union[BaseSignal | float | int]):
         if isinstance(other, BaseSignal):
             return DivisionOfSignals(other, self)
         elif isinstance(other, (float, int)):
@@ -83,8 +84,8 @@ class BaseSignal:
 
 @dataclass
 class TwoSidedOperation(BaseSignal, ABC):
-    lhs: BaseSignal | float | int
-    rhs: BaseSignal | float | int
+    lhs: Union[BaseSignal | float | int]
+    rhs: Union[BaseSignal | float | int]
 
 
 class SumOfSignals(TwoSidedOperation):
