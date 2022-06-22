@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from .base_signal import Signal
-from .simple_signals import Sinusoid, Ramp
+from signals.base_signal import Signal
+from signals.simple_signals import Sinusoid, Ramp
 import numpy as np
 
 
@@ -71,3 +71,43 @@ class AlternatingRamp(Signal):
 
     def _signal(self, t: float) -> float:
         return np.interp(t, self.sampling_times, self.samples)
+
+
+@dataclass
+class CosineSmoothedStep(Signal):
+    width: float = 1.0
+
+    def _signal(self, t: float) -> float:
+        if t < self.width:
+            return -(np.cos(np.pi * t / self.width) - 1) / 2
+        else:
+            return 1.0
+
+
+if __name__ == "__main__":
+    import matplotlib.pyplot as plt
+
+    # s1 = CosineSmoothedStep(t_start=5.0, width=2.0)
+    # s2 = -2.0 * CosineSmoothedStep(t_start=15.0, width=4.0)
+    #
+    # s = s1 + s2
+    # Casper's training signal for theta
+    T = 20.0
+    A = np.deg2rad(np.random.choice([20, 15, -15, 20]))
+
+    s1 = A * CosineSmoothedStep(t_start=-1.0, width=2.0)
+    s2 = -0.5 * A * CosineSmoothedStep(t_start=0.25 * T, width=0.5)
+    s3 = -1.5 * A * CosineSmoothedStep(t_start=0.50 * T, width=1.5)
+    s4 = -0.5 * A * CosineSmoothedStep(t_start=0.75 * T, width=0.5)
+
+    s = s1 + s2 + s3 + s4
+
+    # Plot s
+    tt = np.arange(0, 20, 0.001)
+    ss = []
+    for t_i in tt:
+        ss.append(s(t_i))
+
+    plt.plot(tt, ss)
+    plt.grid()
+    plt.show()

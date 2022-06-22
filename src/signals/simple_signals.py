@@ -1,7 +1,7 @@
 from __future__ import annotations
 import numpy as np
 from dataclasses import dataclass
-from src.signals.base_signal import Signal
+from signals.base_signal import Signal
 
 
 @dataclass
