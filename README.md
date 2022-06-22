@@ -19,7 +19,10 @@ r_t = reference(t=5.0)
 ## Installation options
 
 1) Manually using pip
-`git+https://github.com/aerospace-rl/signals.git`
+
+```bash
+git+https://github.com/aerospace-rl/signals.git
+```
 
 2) In your local virtual environment in edit mode
 
