@@ -15,8 +15,3 @@ reference = 5 * s + sine
 # Reference at t = 5.0:
 r_t = reference(t=5.0)
 ```
-
-## To-do list:
-
-- add implementation for +=, -=, *= and /= operators
-- add more commonly used signals
