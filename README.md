@@ -21,7 +21,7 @@ r_t = reference(t=5.0)
 1) Manually using pip
 
 ```bash
-git+https://github.com/aerospace-rl/signals.git
+pip install git+https://github.com/aerospace-rl/signals.git
 ```
 
 2) In your local virtual environment in edit mode
