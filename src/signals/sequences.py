@@ -1,10 +1,10 @@
 import numpy as np
 from typing import Union
-from base_signal import Const
-from simple_signals import Signal, Step
-from complex_signals import CosineSmoothedStep
+from signals.base_signal import Const
+from signals.simple_signals import Signal, Step
+from signals.complex_signals import CosineSmoothedStep
 
-array_like = Union[list | tuple | np.ndarrray]
+array_like = Union[list | tuple | np.ndarray]
 
 
 def StepSequence(times: array_like, amplitudes: array_like) -> Signal:

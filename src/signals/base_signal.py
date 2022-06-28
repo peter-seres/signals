@@ -83,6 +83,10 @@ class BaseSignal:
     def __call__(self, t: float) -> float:
         raise NotImplementedError
 
+    def eval_on(self, t: np.ndarray) -> np.ndarray:
+        """ Evaluate the signal on an array of timestamps. """
+        return np.array([self.__call__(t_i) for t_i in t])
+
 
 @dataclass
 class TwoSidedOperation(BaseSignal, ABC):
@@ -125,10 +129,6 @@ class Signal(BaseSignal, ABC):
     def _signal(self, t: float) -> float:
         """ Evaluate the signal at time-step t."""
         raise NotImplementedError
-
-    def eval_on(self, t: np.ndarray) -> np.ndarray:
-        """ Evaluate the signal on an array of timestamps. """
-        return np.array([self.__call__(t_i) for t_i in t])
 
 
 @dataclass
