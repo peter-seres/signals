@@ -1,7 +1,6 @@
 import numpy as np
-from signals.base_signal import Signal, Const
-from signals.simple_signals import Step
-from signals.complex_signals import CosineSmoothedStep
+from signals.base_signal import Signal
+from sequences import StepSequence, SmoothedStepSequence
 
 
 def RandomizedStepSequence(
@@ -33,20 +32,10 @@ def RandomizedStepSequence(
     if start_with_zero:
         amplitudes[0] = 0.0
 
-    signal = Const(0.0)
+    # Vary the timings of the steps
+    t_starts = [t + np.random.uniform(-vary_timings, vary_timings) for t in t_starts[1:]]
 
-    for idx, t0 in enumerate(t_starts):
-        # Vary the timings of the time array:
-        t0 = t0 + np.random.uniform(-vary_timings, vary_timings)
-
-        if idx == 0:
-            a = 0
-        else:
-            a = amplitudes[idx - 1]
-        b = amplitudes[idx]
-        signal += (b - a) * Step(t_start=t0)
-
-    return signal
+    return StepSequence(times=t_starts, amplitudes=amplitudes)
 
 
 def RandomizedCosineStepSequence(
@@ -58,10 +47,6 @@ def RandomizedCosineStepSequence(
     n_levels: int = 10,
     vary_timings: float = 0.0,
 ) -> Signal:
-
-    assert (
-        smooth_width < block_width
-    ), "Smoothed region must be shorter than block width"
 
     assert (
         t_max / block_width < n_levels
@@ -79,21 +64,10 @@ def RandomizedCosineStepSequence(
 
     # Generate random amplitudes
     amplitudes = np.random.choice(ampl_choices, size=t_starts.size, replace=False)
-
     if start_with_zero:
         amplitudes[0] = 0.0
 
-    signal = Const(0.0)
+    # Vary the timings of the steps
+    t_starts = [t + np.random.uniform(-vary_timings, vary_timings) for t in t_starts[1:]]
 
-    for idx, t0 in enumerate(t_starts):
-        # Vary the timings of the time array:
-        t0 = t0 + np.random.uniform(-vary_timings, vary_timings)
-
-        if idx == 0:
-            a = 0
-        else:
-            a = amplitudes[idx - 1]
-        b = amplitudes[idx]
-        signal += (b - a) * CosineSmoothedStep(t_start=t0, width=smooth_width)
-
-    return signal
+    return SmoothedStepSequence(times=t_starts, amplitudes=amplitudes, smooth_width=smooth_width)

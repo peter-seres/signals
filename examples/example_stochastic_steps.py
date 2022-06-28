@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from signals import RandomizedStepSequence, RandomizedCosineStepSequence
 import numpy as np
 
+
 def main():
 
     T = 30.0
