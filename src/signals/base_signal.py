@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import numpy as np
 from numpy import NINF, PINF
 from abc import abstractmethod, ABC
 from dataclasses import dataclass, field
@@ -121,11 +123,17 @@ class Signal(BaseSignal, ABC):
 
     @abstractmethod
     def _signal(self, t: float) -> float:
+        """ Evaluate the signal at time-step t."""
         raise NotImplementedError
+
+    def eval_on(self, t: np.ndarray) -> np.ndarray:
+        """ Evaluate the signal on an array of timestamps. """
+        return np.array([self.__call__(t_i) for t_i in t])
 
 
 @dataclass
 class Const(Signal):
+    """ Signal with a constant value."""
     value: float = 0.0
     t_start: float = NINF
 

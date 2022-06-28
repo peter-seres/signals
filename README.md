@@ -5,6 +5,8 @@ The package only relies on `numpy` and implements arithmetic operations between 
 
 ## Usage
 
+### Add two signals together and evaluate at a single time-step
+
 ```py
 from signals import Step, Sinusoid
 
@@ -16,8 +18,24 @@ reference = 5 * step + sine
 r_t = reference(t=5.0)
 ```
 
-Every `Signal` object has `t_start` and a `t_end` arguments, default is set to `-inf` and `+inf` respectively.
-For any `t` not in  `[t_start, t_end]` the Signal returns 0.
+Every `Signal` object has `t_start` and a `t_end` arguments.
+In most cases the default `t_start` and `t_end` are set to `0` and `+inf` respectively.
+For any `t` not in  `[t_start, t_end]` the Signal object returns 0.
+
+### Make a sequence of step signals and evaluate them on an array time-signals:
+
+```py
+import numpy as np
+from signals import StepSequence
+
+amplitudes = [2, 1, 0, -1, 2, 0]
+times = [1, 2, 3, 4, 5, 7]
+step_sequence = StepSequence(times=times, amplitudes=amplitudes)
+
+# Time array:
+t = np.arange(0, 10.0, 0.1)
+s = step_sequence.eval_on(t=t)
+```
 
 ## Installation
 
@@ -57,3 +75,7 @@ class NegativeRamp(Signal):
         return -t
 ```
 
+## To-do / Feature list
+
+- unit testing
+- CI with unit tests and `black` formatting
