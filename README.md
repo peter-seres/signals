@@ -3,7 +3,7 @@
 This is a small package to provide `Signal` objects that can be evaluated at time `t`.
 The package only relies on `numpy` and implements arithmetic operations between `Signal` types, `int` and `float` primitives.
 
-## Usage
+## Example Usage
 
 ### Add two signals together and evaluate at a single time-step
 
@@ -36,6 +36,8 @@ step_sequence = StepSequence(times=times, amplitudes=amplitudes)
 t = np.arange(0, 10.0, 0.1)
 s = step_sequence.eval_on(t=t)
 ```
+
+![plot](/docs/StepSequence.png)
 
 ## Installation
 
