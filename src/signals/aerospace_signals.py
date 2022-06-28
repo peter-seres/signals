@@ -1,6 +1,7 @@
 from typing import List
 from signals.base_signal import Signal
 from signals.simple_signals import Step, Sinusoid
+from signals.complex_signals import CosineSmoothedStep
 
 
 def Doublet(t_start: float, ampl: float, block_width: float) -> Signal:
@@ -34,3 +35,17 @@ def CompositeSinusoid(
     for f, a in zip(frequencies, amplitudes):
         s = s + Sinusoid(t_start=t_start, t_end=t_end, ampl=a, freq=f)
     return s
+
+
+def ThreeTwoOneOneSmoothed(
+    t_start: float = 1.0, ampl: float = 1.0, block_width: float = 1.0, smooth_width: float = 0.2
+) -> Signal:
+    assert smooth_width < block_width / 2, "smoothing width must smaller than half of the block_width "
+    bw = block_width
+    sw = smooth_width
+
+    up1 = ampl * CosineSmoothedStep(t_start=t_start, t_end=t_start + 7 * bw, width=sw)
+    down1 = -2 * ampl * CosineSmoothedStep(t_start=t_start + 3 * bw, t_end=t_start + 5 * bw, width=sw)
+    down2 = -2 * ampl * CosineSmoothedStep(t_start=t_start + 6 * bw, t_end=t_start + 7 * bw, width=sw)
+
+    return up1 + down1 + down2
