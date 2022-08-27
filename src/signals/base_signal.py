@@ -2,7 +2,7 @@ from __future__ import annotations
 import numpy as np
 from abc import abstractmethod, ABC
 from dataclasses import dataclass, field
-from typing import Union
+from typing import List, Tuple, Union
 
 
 class BaseSignal:
@@ -137,7 +137,10 @@ class Signal(BaseSignal, ABC):
         """Evaluate the signal at time-step t."""
         raise NotImplementedError
 
-    def eval_on(self, t_array: np.ndarray) -> np.ndarray:
+    def eval_on(
+        self,
+        t_array: Union[np.ndarray, List[Union[int, float]], Tuple[Union[int, float]]],
+    ) -> np.ndarray:
         """Evaluate the signal on an array of timestamps."""
         return np.array([self.__call__(t_i) for t_i in t_array])
 
