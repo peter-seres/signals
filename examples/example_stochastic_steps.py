@@ -13,7 +13,7 @@ def main():
         block_width=5,
         start_with_zero=True,
         vary_timings=0.2,
-        n_levels=20
+        n_levels=20,
     )
     c = RandomizedCosineStepSequence(
         t_max=T,
@@ -22,7 +22,7 @@ def main():
         start_with_zero=True,
         vary_timings=0.2,
         smooth_width=0.5,
-        n_levels=20
+        n_levels=20,
     )
 
     tt = np.arange(0, T, 0.001)
@@ -38,5 +38,5 @@ def main():
     plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

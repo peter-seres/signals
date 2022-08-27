@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+      - run: echo "🍏 Black formatting status is ${{ job.status }}."
+
+  lint-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+      - run: echo "🍏 Black formatting status is ${{ job.status }}."
+
+  lint-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+      - run: echo "🍏 Black formatting status is ${{ job.status }}."

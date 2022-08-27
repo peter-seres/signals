@@ -38,14 +38,27 @@ def CompositeSinusoid(
 
 
 def ThreeTwoOneOneSmoothed(
-    t_start: float = 1.0, ampl: float = 1.0, block_width: float = 1.0, smooth_width: float = 0.2
+    t_start: float = 1.0,
+    ampl: float = 1.0,
+    block_width: float = 1.0,
+    smooth_width: float = 0.2,
 ) -> Signal:
-    assert smooth_width < block_width / 2, "smoothing width must smaller than half of the block_width "
+    assert (
+        smooth_width < block_width / 2
+    ), "smoothing width must smaller than half of the block_width "
     bw = block_width
     sw = smooth_width
 
     up1 = ampl * CosineSmoothedStep(t_start=t_start, t_end=t_start + 7 * bw, width=sw)
-    down1 = -2 * ampl * CosineSmoothedStep(t_start=t_start + 3 * bw, t_end=t_start + 5 * bw, width=sw)
-    down2 = -2 * ampl * CosineSmoothedStep(t_start=t_start + 6 * bw, t_end=t_start + 7 * bw, width=sw)
+    down1 = (
+        -2
+        * ampl
+        * CosineSmoothedStep(t_start=t_start + 3 * bw, t_end=t_start + 5 * bw, width=sw)
+    )
+    down2 = (
+        -2
+        * ampl
+        * CosineSmoothedStep(t_start=t_start + 6 * bw, t_end=t_start + 7 * bw, width=sw)
+    )
 
     return up1 + down1 + down2
