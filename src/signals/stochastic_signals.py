@@ -29,7 +29,9 @@ def RandomizedStepSequence(
         amplitudes[0] = 0.0
 
     # Vary the timings of the steps
-    t_starts = [t_starts[0]] + [t + np.random.uniform(-vary_timings, vary_timings) for t in t_starts[1:]]
+    t_starts = [t_starts[0]] + [
+        t + np.random.uniform(-vary_timings, vary_timings) for t in t_starts[1:]
+    ]
 
     return StepSequence(times=t_starts, amplitudes=amplitudes)
 
@@ -60,6 +62,10 @@ def RandomizedCosineStepSequence(
         amplitudes[0] = 0.0
 
     # Vary the timings of the steps
-    t_starts = [t_starts[0]] + [t + np.random.uniform(-vary_timings, vary_timings) for t in t_starts[1:]]
+    t_starts = [t_starts[0]] + [
+        t + np.random.uniform(-vary_timings, vary_timings) for t in t_starts[1:]
+    ]
 
-    return SmoothedStepSequence(times=t_starts, amplitudes=amplitudes, smooth_width=smooth_width)
+    return SmoothedStepSequence(
+        times=t_starts, amplitudes=amplitudes, smooth_width=smooth_width
+    )
